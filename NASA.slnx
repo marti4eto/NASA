@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="NASA/NASA.vcxproj" Id="251f3414-fa16-4ff0-a0c6-6ff6d8986865" />
+</Solution>
