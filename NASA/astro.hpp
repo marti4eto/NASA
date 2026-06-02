@@ -1,5 +1,4 @@
-//astro.HPP
-
+// astro.hpp
 
 #ifndef ASTRO_HPP
 #define ASTRO_HPP
@@ -13,27 +12,27 @@ class Astronaut
 private:
     std::string name;
     double height;
-    std::string gender;
+    int gender; // 1-Male, 2-Female
     double weight;
     int xpLevel;
 
 public:
-    //rule of 5
+    // rule of 5
     Astronaut();
-    Astronaut(std::string name, double height, std::string gender, double weight, int xpLevel);
+    Astronaut(std::string name, double height, int gender, double weight, int xpLevel);
     Astronaut(const Astronaut& other);
     Astronaut(Astronaut&& other) noexcept;
     ~Astronaut();
-
+    //geturi
     std::string getName() const;
     double getHeight() const;
-    std::string getGender() const;
+    int getGender() const;
     double getWeight() const;
     int getXpLevel() const;
-
+    //seturi
     void setName(const std::string& name);
     void setHeight(double height);
-    void setGender(const std::string& gender);
+    void setGender(int gender);
     void setWeight(double weight);
     void setXpLevel(int xpLevel);
 
@@ -47,4 +46,5 @@ public:
     friend std::ostream& operator<<(std::ostream& out, const Astronaut& astronaut);
     friend std::istream& operator>>(std::istream& in, Astronaut& astronaut);
 };
-#endif  
+
+#endif

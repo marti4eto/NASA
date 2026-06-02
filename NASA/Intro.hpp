@@ -9,9 +9,11 @@
 #include <windows.h>
 #include "color.hpp"
 
+using namespace std;
+
 void sleepMs(int ms)
 {
-    std::this_thread::sleep_for(std::chrono::milliseconds(ms));
+    this_thread::sleep_for(chrono::milliseconds(ms));
 }
 
 void clearScreen()
@@ -19,18 +21,115 @@ void clearScreen()
     system("cls");
 }
 
-void printSlow(const std::string& text, int delay = 35)
+void printSlow(const string& text, int delay = 35)
 {
     for (char ch : text)
     {
-        std::cout << ch;
+        cout << ch;
         sleepMs(delay);
     }
 }
 
+bool loginSystem()
+{
+    string username;
+    string password;
+
+    const string correctUsername = "NASA";
+    const string correctPassword = "1234";
+
+    int attempts = 3;
+
+    while (attempts > 0)
+    {
+        clearScreen();
+
+        color(11);
+        cout << "========================================" << endl;
+        cout << "          NASA NETWORK LOGIN            " << endl;
+        cout << "========================================" << endl;
+        resetColor();
+
+        cout << endl;
+
+        color(15);
+        cout << "Enter your mission credentials." << endl;
+        resetColor();
+
+        cout << endl;
+
+        color(14);
+        cout << "USERNAME: ";
+        resetColor();
+        cin >> username;
+
+        color(14);
+        cout << "PASSWORD: ";
+        resetColor();
+        cin >> password;
+
+        if (username == correctUsername && password == correctPassword)
+        {
+            clearScreen();
+
+            color(10);
+            cout << "========================================" << endl;
+            cout << "             ACCESS GRANTED             " << endl;
+            cout << "========================================" << endl;
+            resetColor();
+
+            cout << endl;
+
+            color(11);
+            printSlow("Verifying identity...\n", 35);
+            sleepMs(400);
+            printSlow("Connecting to NASA internal network...\n", 35);
+            sleepMs(400);
+            printSlow("Loading Mission Control access...\n", 35);
+            sleepMs(700);
+
+            return true;
+        }
+        else
+        {
+            attempts--;
+
+            clearScreen();
+
+            color(12);
+            cout << "========================================" << endl;
+            cout << "              ACCESS DENIED             " << endl;
+            cout << "========================================" << endl;
+            resetColor();
+
+            cout << endl;
+            cout << "Wrong username or password." << endl;
+            cout << "Attempts left: " << attempts << endl;
+
+            sleepMs(1500);
+        }
+    }
+
+    clearScreen();
+
+    color(12);
+    cout << "========================================" << endl;
+    cout << "              SYSTEM LOCKED             " << endl;
+    cout << "========================================" << endl;
+    resetColor();
+
+    cout << endl;
+    cout << "Too many failed login attempts." << endl;
+    cout << "Program will now close." << endl;
+
+    sleepMs(2500);
+
+    return false;
+}
+
 void showIntro()
 {
-    std::vector<std::string> rocket =
+    vector<string> rocket =
     {
         "           /\\           ",
         "          /  \\          ",
@@ -44,7 +143,7 @@ void showIntro()
         "       /_|____|_\\       "
     };
 
-    std::vector<std::vector<std::string>> fire =
+    vector<vector<string>> fire =
     {
         {
             "          /\\/\\          ",
@@ -63,7 +162,7 @@ void showIntro()
         }
     };
 
-    std::vector<std::string> ground =
+    vector<string> ground =
     {
         "================================",
         "      NASA LAUNCH PLATFORM      ",
@@ -77,11 +176,11 @@ void showIntro()
     clearScreen();
 
     color(11);
-    std::cout << "\n\n";
-    std::cout << "========================================\n";
-    std::cout << "             NASA IT PROJECT            \n";
-    std::cout << "        Space Exploration Simulator      \n";
-    std::cout << "========================================\n\n";
+    cout << "\n\n";
+    cout << "========================================" << endl;
+    cout << "             NASA IT PROJECT            " << endl;
+    cout << "        Space Exploration Simulator     " << endl;
+    cout << "========================================" << endl << endl;
 
     color(15);
     printSlow("Initializing mission control systems...\n", 35);
@@ -92,15 +191,15 @@ void showIntro()
     sleepMs(900);
 
     color(14);
-    std::cout << "\nT-minus 3...\n";
+    cout << "\nT-minus 3..." << endl;
     sleepMs(700);
-    std::cout << "T-minus 2...\n";
+    cout << "T-minus 2..." << endl;
     sleepMs(700);
-    std::cout << "T-minus 1...\n";
+    cout << "T-minus 1..." << endl;
     sleepMs(700);
 
     color(12);
-    std::cout << "\nIGNITION!\n";
+    cout << "\nIGNITION!" << endl;
     sleepMs(800);
 
     for (int y = startY; y >= -15; y--)
@@ -114,41 +213,47 @@ void showIntro()
             if (rocketRow >= 0 && rocketRow < rocket.size())
             {
                 color(15);
-                std::cout << rocket[rocketRow] << std::endl;
+                cout << rocket[rocketRow] << endl;
             }
             else if (rocketRow >= rocket.size() && rocketRow < rocket.size() + 3)
             {
                 color(12 + frame % 3);
-                std::cout << fire[frame % 3][rocketRow - rocket.size()] << std::endl;
+                cout << fire[frame % 3][rocketRow - rocket.size()] << endl;
             }
             else if (row >= screenHeight - ground.size())
             {
                 color(8);
-                std::cout << ground[row - (screenHeight - ground.size())] << std::endl;
+                cout << ground[row - (screenHeight - ground.size())] << endl;
             }
             else
             {
-                std::cout << std::endl;
+                cout << endl;
             }
         }
 
         frame++;
 
         if (y > startY - 5)
+        {
             sleepMs(220);
+        }
         else if (y > startY - 10)
+        {
             sleepMs(150);
+        }
         else
+        {
             sleepMs(70);
+        }
     }
 
     clearScreen();
 
     color(10);
-    std::cout << "\n\n";
-    std::cout << "========================================\n";
-    std::cout << "          LAUNCH SUCCESSFUL             \n";
-    std::cout << "========================================\n\n";
+    cout << "\n\n";
+    cout << "========================================" << endl;
+    cout << "          LAUNCH SUCCESSFUL             " << endl;
+    cout << "========================================" << endl << endl;
 
     color(11);
     printSlow("Welcome to NASA Mission Control.\n", 40);
