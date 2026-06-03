@@ -1,300 +1,131 @@
-#include "engineer.hpp"
+#include "Engineer.hpp"
 
-Engineer::Engineer()
-{
-    rocketName = "";
-    astronautCapacity = 0;
-    travelDistance = 0;
+void Engineer::copy(const Engineer& other) {
+    id = other.id;
+    name = other.name;
+    capacity = other.capacity;
+    maxDistance = other.maxDistance;
+    topSpeed = other.topSpeed;
+}
+
+Engineer::Engineer() {
+    id = "";
+    name = "";
+    capacity = 0;
+    maxDistance = 0;
     topSpeed = 0;
-    reliability = 0;
 }
 
-Engineer::Engineer(std::string rocketName, int astronautCapacity, double travelDistance, double topSpeed, double reliability)
-{
-    this->rocketName = rocketName;
-
-    if (astronautCapacity >= 0)
-    {
-        this->astronautCapacity = astronautCapacity;
-    }
-    else
-    {
-        this->astronautCapacity = 0;
-    }
-
-    if (travelDistance >= 0)
-    {
-        this->travelDistance = travelDistance;
-    }
-    else
-    {
-        this->travelDistance = 0;
-    }
-
-    if (topSpeed >= 0)
-    {
-        this->topSpeed = topSpeed;
-    }
-    else
-    {
-        this->topSpeed = 0;
-    }
-
-    if (reliability >= 0 && reliability <= 100)
-    {
-        this->reliability = reliability;
-    }
-    else
-    {
-        this->reliability = 0;
-    }
+Engineer::Engineer(std::string id, std::string name, int capacity, double maxDistance, double topSpeed) {
+    this->id = id;
+    this->name = name;
+    this->capacity = capacity;
+    this->maxDistance = maxDistance;
+    this->topSpeed = topSpeed;
 }
 
-Engineer::Engineer(const Engineer& other)
-{
-    rocketName = other.rocketName;
-    astronautCapacity = other.astronautCapacity;
-    travelDistance = other.travelDistance;
-    topSpeed = other.topSpeed;
-    reliability = other.reliability;
+Engineer::Engineer(const Engineer& other) {
+    copy(other);
 }
 
-Engineer::Engineer(Engineer&& other) noexcept
-{
-    rocketName = other.rocketName;
-    astronautCapacity = other.astronautCapacity;
-    travelDistance = other.travelDistance;
-    topSpeed = other.topSpeed;
-    reliability = other.reliability;
-
-    other.rocketName = "";
-    other.astronautCapacity = 0;
-    other.travelDistance = 0;
-    other.topSpeed = 0;
-    other.reliability = 0;
+Engineer::~Engineer() {
 }
 
-Engineer::~Engineer()
-{
-}
-
-Engineer& Engineer::operator=(const Engineer& other)
-{
-    if (this != &other)
-    {
-        rocketName = other.rocketName;
-        astronautCapacity = other.astronautCapacity;
-        travelDistance = other.travelDistance;
-        topSpeed = other.topSpeed;
-        reliability = other.reliability;
+Engineer& Engineer::operator=(const Engineer& other) {
+    if (this != &other) {
+        copy(other);
     }
 
     return *this;
 }
 
-
-Engineer& Engineer::operator=(Engineer&& other) noexcept
-{
-    if (this != &other)
-    {
-        rocketName = other.rocketName;
-        astronautCapacity = other.astronautCapacity;
-        travelDistance = other.travelDistance;
-        topSpeed = other.topSpeed;
-        reliability = other.reliability;
-
-        other.rocketName = "";
-        other.astronautCapacity = 0;
-        other.travelDistance = 0;
-        other.topSpeed = 0;
-        other.reliability = 0;
-    }
-
-    return *this;
+std::string Engineer::getId() const {
+    return id;
 }
 
-// Geturi
-std::string Engineer::getRocketName() const
-{
-    return rocketName;
+std::string Engineer::getName() const {
+    return name;
 }
 
-int Engineer::getAstronautCapacity() const
-{
-    return astronautCapacity;
+int Engineer::getCapacity() const {
+    return capacity;
 }
 
-double Engineer::getTravelDistance() const
-{
-    return travelDistance;
+double Engineer::getMaxDistance() const {
+    return maxDistance;
 }
 
-double Engineer::getTopSpeed() const
-{
+double Engineer::getTopSpeed() const {
     return topSpeed;
 }
 
-double Engineer::getReliability() const
+void Engineer::setId(std::string id)
 {
-    return reliability;
+    this->id = id;
 }
 
-// Setters
-void Engineer::setRocketName(const std::string& rocketName)
-{
-    this->rocketName = rocketName;
+bool Engineer::operator==(const Engineer& other) const {
+    return id == other.id;
 }
 
-void Engineer::setAstronautCapacity(int astronautCapacity)
-{
-    if (astronautCapacity >= 0)
-    {
-        this->astronautCapacity = astronautCapacity;
-    }
-    else
-    {
-        this->astronautCapacity = 0;
-    }
+bool Engineer::operator!=(const Engineer& other) const {
+    return !(*this == other);
 }
 
-void Engineer::setTravelDistance(double travelDistance)
-{
-    if (travelDistance >= 0)
-    {
-        this->travelDistance = travelDistance;
-    }
-    else
-    {
-        this->travelDistance = 0;
-    }
+bool Engineer::operator<(const Engineer& other) const {
+    return maxDistance < other.maxDistance;
 }
 
-void Engineer::setTopSpeed(double topSpeed)
-{
-    if (topSpeed >= 0)
-    {
-        this->topSpeed = topSpeed;
-    }
-    else
-    {
-        this->topSpeed = 0;
-    }
+bool Engineer::operator>(const Engineer& other) const {
+    return maxDistance > other.maxDistance;
 }
 
-void Engineer::setReliability(double reliability)
-{
-    if (reliability >= 0 && reliability <= 100)
-    {
-        this->reliability = reliability;
-    }
-    else
-    {
-        this->reliability = 0;
-    }
-}
-
-void Engineer::print() const
-{
-    std::cout << "Rocket name: " << rocketName << std::endl;
-    std::cout << "Astronaut capacity: " << astronautCapacity << std::endl;
-    std::cout << "Travel distance: " << travelDistance << " km" << std::endl;
-    std::cout << "Top speed: " << topSpeed << " km/h" << std::endl;
-    std::cout << "Reliability: " << reliability << "%" << std::endl;
-}
-
-void Engineer::saveToFile(std::ofstream& file) const
-{
-    file << rocketName << std::endl;
-    file << astronautCapacity << std::endl;
-    file << travelDistance << std::endl;
-    file << topSpeed << std::endl;
-    file << reliability << std::endl;
-}
-
-void Engineer::loadFromFile(std::ifstream& file)
-{
-    std::getline(file, rocketName);
-
-    file >> astronautCapacity;
-    file >> travelDistance;
-    file >> topSpeed;
-    file >> reliability;
-    file.ignore();
-
-    if (astronautCapacity < 0)
-    {
-        astronautCapacity = 0;
-    }
-
-    if (travelDistance < 0)
-    {
-        travelDistance = 0;
-    }
-
-    if (topSpeed < 0)
-    {
-        topSpeed = 0;
-    }
-
-    if (reliability < 0 || reliability > 100)
-    {
-        reliability = 0;
-    }
-}
-
-std::ostream& operator<<(std::ostream& out, const Engineer& engineer)
-{
-    out << "Rocket name: " << engineer.rocketName << std::endl;
-    out << "Astronaut capacity: " << engineer.astronautCapacity << std::endl;
-    out << "Travel distance: " << engineer.travelDistance << " km" << std::endl;
-    out << "Top speed: " << engineer.topSpeed << " km/h" << std::endl;
-    out << "Reliability: " << engineer.reliability << "%" << std::endl;
+std::ostream& operator<<(std::ostream& out, const Engineer& obj) {
+    out << "===== Rocket Info =====" << std::endl;
+    out << "ID: " << obj.id << std::endl;
+    out << "Name: " << obj.name << std::endl;
+    out << "Capacity: " << obj.capacity << " astronauts" << std::endl;
+    out << "Max distance: " << obj.maxDistance << " light years" << std::endl;
+    out << "Top speed: " << obj.topSpeed << " km/s" << std::endl;
+    out << "=======================" << std::endl;
 
     return out;
 }
 
-std::istream& operator>>(std::istream& in, Engineer& engineer)
-{
-    std::cout << "Enter rocket name: ";
-    std::getline(in, engineer.rocketName);
+std::istream& operator>>(std::istream& in, Engineer& obj) {
+    std::cout << "===== Create Rocket =====" << std::endl;
 
-    std::cout << "Enter astronaut capacity: ";
-    in >> engineer.astronautCapacity;
+    std::cout << "Rocket name / max 15 characters: ";
+    in >> obj.name;
 
-    while (engineer.astronautCapacity < 0)
-    {
-        std::cout << "Invalid capacity. Enter again: ";
-        in >> engineer.astronautCapacity;
+    while (obj.name.size() > 15) {
+        std::cout << "Name is too long. Enter max 15 characters: ";
+        in >> obj.name;
     }
 
-    std::cout << "Enter travel distance: ";
-    in >> engineer.travelDistance;
+    std::cout << "Capacity: ";
+    in >> obj.capacity;
 
-    while (engineer.travelDistance < 0)
-    {
-        std::cout << "Invalid distance. Enter again: ";
-        in >> engineer.travelDistance;
+    while (obj.capacity <= 0) {
+        std::cout << "Capacity must be positive. Enter again: ";
+        in >> obj.capacity;
     }
 
-    std::cout << "Enter top speed: ";
-    in >> engineer.topSpeed;
+    std::cout << "Max distance in light years: ";
+    in >> obj.maxDistance;
 
-    while (engineer.topSpeed < 0)
-    {
-        std::cout << "Invalid speed. Enter again: ";
-        in >> engineer.topSpeed;
+    while (obj.maxDistance <= 0) {
+        std::cout << "Distance must be positive. Enter again: ";
+        in >> obj.maxDistance;
     }
 
-    std::cout << "Enter reliability (0 - 100): ";
-    in >> engineer.reliability;
+    std::cout << "Top speed: ";
+    in >> obj.topSpeed;
 
-    while (engineer.reliability < 0 || engineer.reliability > 100)
-    {
-        std::cout << "Invalid reliability. Enter again (0 - 100): ";
-        in >> engineer.reliability;
+    while (obj.topSpeed <= 0) {
+        std::cout << "Top speed must be positive. Enter again: ";
+        in >> obj.topSpeed;
     }
-
-    in.ignore();
 
     return in;
 }

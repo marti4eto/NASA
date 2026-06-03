@@ -20,7 +20,7 @@ inline void color(int color)
 	SetConsoleTextAttribute(console, color);
 }
 
-inline void resetColor()
+inline void resetColor() // izbqgvame greshaka pri razdelna kompilacija.
 {
 	SetConsoleTextAttribute(console, 7);
 }

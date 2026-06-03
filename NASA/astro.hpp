@@ -1,50 +1,33 @@
-// astro.hpp
-
 #ifndef ASTRO_HPP
 #define ASTRO_HPP
 
 #include <iostream>
 #include <string>
-#include <fstream>
+#include <vector>
 
-class Astronaut
-{
+using namespace std;
+
+class Astro {
 private:
-    std::string name;
+    string id;
+    string name;
+    char gender;
+    int age;
     double height;
-    int gender; // 1-Male, 2-Female
     double weight;
-    int xpLevel;
 
 public:
-    // rule of 5
-    Astronaut();
-    Astronaut(std::string name, double height, int gender, double weight, int xpLevel);
-    Astronaut(const Astronaut& other);
-    Astronaut(Astronaut&& other) noexcept;
-    ~Astronaut();
-    //geturi
-    std::string getName() const;
+    Astro();
+    Astro(string id, string name, char gender, int age, double height, double weight);
+
+    string getId() const;
+    string getName() const;
+    char getGender() const;
+    int getAge() const;
     double getHeight() const;
-    int getGender() const;
     double getWeight() const;
-    int getXpLevel() const;
-    //seturi
-    void setName(const std::string& name);
-    void setHeight(double height);
-    void setGender(int gender);
-    void setWeight(double weight);
-    void setXpLevel(int xpLevel);
 
     void print() const;
-    Astronaut& operator=(const Astronaut& other);
-    Astronaut& operator=(Astronaut&& other) noexcept;
-
-    void saveToFile(std::ofstream& file) const;
-    void loadFromFile(std::ifstream& file);
-
-    friend std::ostream& operator<<(std::ostream& out, const Astronaut& astronaut);
-    friend std::istream& operator>>(std::istream& in, Astronaut& astronaut);
 };
 
 #endif

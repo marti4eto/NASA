@@ -27,9 +27,6 @@
     <ClCompile Include="discoverer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="color.hpp">
@@ -47,8 +44,10 @@
     <ClInclude Include="discoverer.hpp">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="manager.hpp">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="astronauts.txt" />
+    <Text Include="rockets.txt" />
+    <Text Include="discoveries.txt" />
   </ItemGroup>
 </Project>

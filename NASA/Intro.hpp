@@ -11,17 +11,17 @@
 
 using namespace std;
 
-void sleepMs(int ms)
+inline void sleepMs(int ms)
 {
     this_thread::sleep_for(chrono::milliseconds(ms));
 }
 
-void clearScreen()
+inline void clearScreen()
 {
     system("cls");
 }
 
-void printSlow(const string& text, int delay = 35)
+inline void printSlow(const string& text, int delay = 35)
 {
     for (char ch : text)
     {
@@ -30,13 +30,13 @@ void printSlow(const string& text, int delay = 35)
     }
 }
 
-bool loginSystem()
+inline bool loginSystem()
 {
     string username;
-    string password;
+    string pass;
 
     const string correctUsername = "NASA";
-    const string correctPassword = "1234";
+    const string correctPass = "1234";
 
     int attempts = 3;
 
@@ -66,9 +66,9 @@ bool loginSystem()
         color(14);
         cout << "PASSWORD: ";
         resetColor();
-        cin >> password;
+        cin >> pass;
 
-        if (username == correctUsername && password == correctPassword)
+        if (username == correctUsername && pass == correctPass)
         {
             clearScreen();
 
@@ -81,12 +81,10 @@ bool loginSystem()
             cout << endl;
 
             color(11);
-            printSlow("Verifying identity...\n", 35);
-            sleepMs(400);
-            printSlow("Connecting to NASA internal network...\n", 35);
+            printSlow("Verifying identity...\n", 20);
             sleepMs(400);
             printSlow("Loading Mission Control access...\n", 35);
-            sleepMs(700);
+            sleepMs(300);
 
             return true;
         }
@@ -127,7 +125,7 @@ bool loginSystem()
     return false;
 }
 
-void showIntro()
+inline void showIntro()
 {
     vector<string> rocket =
     {
@@ -170,7 +168,7 @@ void showIntro()
     };
 
     int screenHeight = 32;
-    int startY = screenHeight - rocket.size() - ground.size() - 3;
+    int startY = screenHeight - static_cast<int>(rocket.size()) - static_cast<int>(ground.size()) - 3;
     int frame = 0;
 
     clearScreen();
@@ -185,18 +183,18 @@ void showIntro()
     color(15);
     printSlow("Initializing mission control systems...\n", 35);
     sleepMs(500);
-    printSlow("Loading astronauts, rockets and planets...\n", 35);
+    printSlow("Loading astronauts, rockets and planets...\n", 25);
     sleepMs(500);
-    printSlow("Preparing launch sequence...\n", 35);
+    printSlow("Preparing launch sequence...\n", 15);
     sleepMs(900);
 
     color(14);
-    cout << "\nT-minus 3..." << endl;
-    sleepMs(700);
-    cout << "T-minus 2..." << endl;
-    sleepMs(700);
-    cout << "T-minus 1..." << endl;
-    sleepMs(700);
+    cout << "\n3..." << endl;
+    sleepMs(500);
+    cout << "2..." << endl;
+    sleepMs(500);
+    cout << "1..." << endl;
+    sleepMs(500);
 
     color(12);
     cout << "\nIGNITION!" << endl;

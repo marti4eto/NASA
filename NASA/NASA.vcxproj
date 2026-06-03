@@ -130,7 +130,6 @@
     <ClCompile Include="astro.cpp" />
     <ClCompile Include="discoverer.cpp" />
     <ClCompile Include="engineer.cpp" />
-    <ClCompile Include="manager.cpp" />
     <ClCompile Include="NASA.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -139,7 +138,11 @@
     <ClInclude Include="discoverer.hpp" />
     <ClInclude Include="engineer.hpp" />
     <ClInclude Include="Intro.hpp" />
-    <ClInclude Include="manager.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="astronauts.txt" />
+    <Text Include="discoveries.txt" />
+    <Text Include="rockets.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

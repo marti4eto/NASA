@@ -1,548 +1,163 @@
-#include <random>
-#include <windows.h>
-#include <iostream>
+#include "Discoverer.hpp"
 
-#include "discoverer.hpp"
-#include "color.hpp"
-
-using namespace std;
-
-void drawRocket()
-{
-    color(15);
-    cout << "          /\\          " << endl;
-    cout << "         /  \\         " << endl;
-    cout << "        /____\\        " << endl;
-
-    color(11);
-    cout << "        |NASA|        " << endl;
-
-    color(15);
-    cout << "        |    |        " << endl;
-    cout << "        |____|        " << endl;
-
-    color(12);
-    cout << "         /||\\         " << endl;
-
-    color(14);
-    cout << "        /_||_\\        " << endl;
-
-    resetColor();
+void Discoverer::copy(const Discoverer& other) {
+    id = other.id;
+    name = other.name;
+    type = other.type;
+    distance = other.distance;
+    resource = other.resource;
 }
 
-void drawStars()
-{
-    color(11);
-    cout << "       *        .       *      " << endl;
-
-    color(14);
-    cout << "    .       *       .          " << endl;
-
-    color(13);
-    cout << "         *      .       *      " << endl;
-
-    resetColor();
+Discoverer::Discoverer() {
+    id = "";
+    name = "";
+    type = "";
+    distance = 0;
+    resource = "";
 }
 
-void playSuccessfulLaunchAnimation()
-{
-    for (int i = 10; i >= 0; i--)
-    {
-        system("cls");
-
-        for (int space = 0; space < i; space++)
-        {
-            cout << endl;
-        }
-
-        drawRocket();
-
-        cout << endl;
-        color(14);
-        cout << "        Launching..." << endl;
-        resetColor();
-
-        Sleep(250);
-    }
-
-    system("cls");
-
-    drawStars();
-    cout << endl;
-
-    color(10);
-    cout << "MISSION SUCCESSFUL!" << endl;
-    resetColor();
-
-    cout << endl;
-
-    color(11);
-    cout << "The rocket reached space successfully!" << endl;
-    resetColor();
-
-    Sleep(2000);
+Discoverer::Discoverer(std::string id, std::string name, std::string type, double distance, std::string resource) {
+    this->id = id;
+    this->name = name;
+    this->type = type;
+    this->distance = distance;
+    this->resource = resource;
 }
 
-void playFailedLaunchAnimation()
-{
-    for (int i = 10; i >= 4; i--)
-    {
-        system("cls");
-
-        for (int space = 0; space < i; space++)
-        {
-            cout << endl;
-        }
-
-        drawRocket();
-
-        cout << endl;
-        color(14);
-        cout << "        Launching..." << endl;
-        resetColor();
-
-        Sleep(250);
-    }
-
-    for (int i = 4; i <= 10; i++)
-    {
-        system("cls");
-
-        for (int space = 0; space < i; space++)
-        {
-            cout << endl;
-        }
-
-        drawRocket();
-
-        cout << endl;
-
-        color(12);
-        cout << "        Engine problem..." << endl;
-
-        color(14);
-        cout << "        Returning..." << endl;
-
-        resetColor();
-
-        Sleep(250);
-    }
-
-    system("cls");
-
-    drawRocket();
-
-    cout << endl;
-
-    color(12);
-    cout << "MISSION FAILED!" << endl;
-
-    color(14);
-    cout << "The rocket returned to the launch pad." << endl;
-
-    resetColor();
-
-    Sleep(2000);
-}
-//uspeshna misiq 
-
-
-Discoverer::Discoverer()
-{
-    planetType = 1;
-    distanceFromEarth = 0;
-    suitableForLife = false;
-    hasLife = false;
-    richResource = "";
-    missionSuccess = false;
-    missionCompleted = false;
+Discoverer::Discoverer(const Discoverer& other) {
+    copy(other);
 }
 
-Discoverer::Discoverer(int planetType, double distanceFromEarth, bool suitableForLife, bool hasLife, std::string richResource)
-{
-    setPlanetType(planetType);
-    setDistanceFromEarth(distanceFromEarth);
-    this->suitableForLife = suitableForLife;
-    this->hasLife = hasLife;
-    this->richResource = richResource;
-
-    missionSuccess = false;
-    missionCompleted = false;
+Discoverer::~Discoverer() {
 }
 
-Discoverer::Discoverer(const Discoverer& other)
-{
-    planetType = other.planetType;
-    distanceFromEarth = other.distanceFromEarth;
-    suitableForLife = other.suitableForLife;
-    hasLife = other.hasLife;
-    richResource = other.richResource;
-    missionSuccess = other.missionSuccess;
-    missionCompleted = other.missionCompleted;
-}
-
-Discoverer::Discoverer(Discoverer&& other) noexcept
-{
-    planetType = other.planetType;
-    distanceFromEarth = other.distanceFromEarth;
-    suitableForLife = other.suitableForLife;
-    hasLife = other.hasLife;
-    richResource = other.richResource;
-    missionSuccess = other.missionSuccess;
-    missionCompleted = other.missionCompleted;
-
-    other.planetType = 1;
-    other.distanceFromEarth = 0;
-    other.suitableForLife = false;
-    other.hasLife = false;
-    other.richResource = "";
-    other.missionSuccess = false;
-    other.missionCompleted = false;
-}
-
-Discoverer::~Discoverer()
-{}
-
-Discoverer& Discoverer::operator=(const Discoverer& other)
-{
-    if (this != &other)
-    {
-        planetType = other.planetType;
-        distanceFromEarth = other.distanceFromEarth;
-        suitableForLife = other.suitableForLife;
-        hasLife = other.hasLife;
-        richResource = other.richResource;
-        missionSuccess = other.missionSuccess;
-        missionCompleted = other.missionCompleted;
+Discoverer& Discoverer::operator=(const Discoverer& other) {
+    if (this != &other) {
+        copy(other);
     }
 
     return *this;
 }
 
-Discoverer& Discoverer::operator=(Discoverer&& other) noexcept
-{
-    if (this != &other)
-    {
-        planetType = other.planetType;
-        distanceFromEarth = other.distanceFromEarth;
-        suitableForLife = other.suitableForLife;
-        hasLife = other.hasLife;
-        richResource = other.richResource;
-        missionSuccess = other.missionSuccess;
-        missionCompleted = other.missionCompleted;
-
-        other.planetType = 1;
-        other.distanceFromEarth = 0;
-        other.suitableForLife = false;
-        other.hasLife = false;
-        other.richResource = "";
-        other.missionSuccess = false;
-        other.missionCompleted = false;
-    }
-
-    return *this;
+std::string Discoverer::getId() const {
+    return id;
+}
+void Discoverer::setId(std::string id) {
+    this->id = id;
 }
 
-// geturi
-int Discoverer::getPlanetType() const
-{
-    return planetType;
+std::string Discoverer::getName() const {
+    return name;
 }
 
-double Discoverer::getDistanceFromEarth() const
-{
-    return distanceFromEarth;
+std::string Discoverer::getType() const {
+    return type;
 }
 
-bool Discoverer::getSuitableForLife() const
-{
-    return suitableForLife;
+double Discoverer::getDistance() const {
+    return distance;
 }
 
-bool Discoverer::getHasLife() const
-{
-    return hasLife;
+std::string Discoverer::getResource() const {
+    return resource;
 }
 
-std::string Discoverer::getRichResource() const
-{
-    return richResource;
+bool Discoverer::operator==(const Discoverer& other) const {
+    return id == other.id;
 }
 
-bool Discoverer::getMissionSuccess() const
-{
-    return missionSuccess;
+bool Discoverer::operator!=(const Discoverer& other) const {
+    return !(*this == other);
 }
 
-bool Discoverer::getMissionCompleted() const
-{
-    return missionCompleted;
+bool Discoverer::operator<(const Discoverer& other) const {
+    return distance < other.distance;
 }
 
-// seturi
-void Discoverer::setPlanetType(int planetType)
-{
-    if (planetType >= 1 && planetType <= 3)
-    {
-        this->planetType = planetType;
-    }
-    else
-    {
-        this->planetType = 1;
-    }
+bool Discoverer::operator>(const Discoverer& other) const {
+    return distance > other.distance;
 }
 
-void Discoverer::setDistanceFromEarth(double distanceFromEarth)
-{
-    if (distanceFromEarth >= 0)
-    {
-        this->distanceFromEarth = distanceFromEarth;
-    }
-    else
-    {
-        this->distanceFromEarth = 0;
-    }
-}
-
-void Discoverer::setSuitableForLife(bool suitableForLife)
-{
-    this->suitableForLife = suitableForLife;
-}
-
-void Discoverer::setHasLife(bool hasLife)
-{
-    this->hasLife = hasLife;
-}
-
-void Discoverer::setRichResource(const std::string& richResource)
-{
-    this->richResource = richResource;
-}
-
-std::string Discoverer::getPlanetTypeAsText() const
-{
-    if (planetType == 1)
-    {
-        return "Small planet";
-    }
-    else if (planetType == 2)
-    {
-        return "Big planet";
-    }
-    else
-    {
-        return "Star";
-    }
-}
-
-std::string Discoverer::getMissionResultAsText() const
-{
-    if (!missionCompleted)
-    {
-        return "Mission has not started yet.";
-    }
-
-    if (missionSuccess)
-    {
-        return "Mission successful! Samples and materials collected.";
-    }
-
-    return "Mission failed! The discoverers returned empty-handed.";
-}
-
-void Discoverer::startMission(double rocketReliability)
-{
-    if (rocketReliability < 0)
-    {
-        rocketReliability = 0;
-    }
-
-    if (rocketReliability > 100)
-    {
-        rocketReliability = 100;
-    }
-
-    double missionChance = 50;
-
-    if (rocketReliability > 50)
-    {
-        missionChance += (rocketReliability - 50) / 2;
-    }
-    else if (rocketReliability < 50)
-    {
-        missionChance -= (50 - rocketReliability) / 2;
-    }
-
-    if (missionChance < 5)
-    {
-        missionChance = 5;
-    }
-
-    if (missionChance > 95)
-    {
-        missionChance = 95;
-    }
-
-    std::random_device rd;
-    std::mt19937 generator(rd());
-    std::uniform_int_distribution<int> distribution(1, 100);
-
-    int randomNumber = distribution(generator);
-
-    missionSuccess = randomNumber <= missionChance;
-    missionCompleted = true;
-
-    std::cout << "Mission chance: " << missionChance << "%" << std::endl;
-    std::cout << "Random result: " << randomNumber << std::endl;
-
-    Sleep(1200);
-
-    if (missionSuccess)
-    {
-        playSuccessfulLaunchAnimation();
-    }
-    else
-    {
-        playFailedLaunchAnimation();
-    }
-}
-
-void Discoverer::print() const
-{
-    std::cout << "Planet type: " << getPlanetTypeAsText() << std::endl;
-    std::cout << "Distance from Earth: " << distanceFromEarth << " light years" << std::endl;
-    std::cout << "Suitable for life: " << (suitableForLife ? "Yes" : "No") << std::endl;
-    std::cout << "Has life: " << (hasLife ? "Yes" : "No") << std::endl;
-    std::cout << "Rich resource: " << richResource << std::endl;
-    std::cout << "Mission result: " << getMissionResultAsText() << std::endl;
-}
-
-void Discoverer::saveToFile(std::ofstream& file) const
-{
-    file << planetType << std::endl;
-    file << distanceFromEarth << std::endl;
-    file << suitableForLife << std::endl;
-    file << hasLife << std::endl;
-    file << richResource << std::endl;
-    file << missionSuccess << std::endl;
-    file << missionCompleted << std::endl;
-}
-
-// Load from file
-void Discoverer::loadFromFile(std::ifstream& file)
-{
-    file >> planetType;
-    file >> distanceFromEarth;
-    file >> suitableForLife;
-    file >> hasLife;
-    file.ignore();
-
-    std::getline(file, richResource);
-
-    file >> missionSuccess;
-    file >> missionCompleted;
-    file.ignore();
-
-    if (planetType < 1 || planetType > 3)
-    {
-        planetType = 1;
-    }
-
-    if (distanceFromEarth < 0)
-    {
-        distanceFromEarth = 0;
-    }
-}
-
-std::ostream& operator<<(std::ostream& out, const Discoverer& discoverer)
-{
-    out << "Planet type: " << discoverer.getPlanetTypeAsText() << std::endl;
-    out << "Distance from Earth: " << discoverer.distanceFromEarth << " light years" << std::endl;
-    out << "Suitable for life: " << (discoverer.suitableForLife ? "Yes" : "No") << std::endl;
-    out << "Has life: " << (discoverer.hasLife ? "Yes" : "No") << std::endl;
-    out << "Rich resource: " << discoverer.richResource << std::endl;
-    out << "Mission result: " << discoverer.getMissionResultAsText() << std::endl;
+std::ostream& operator<<(std::ostream& out, const Discoverer& obj) {
+    out << "===== Destination Info =====" << std::endl;
+    out << "ID: " << obj.id << std::endl;
+    out << "Name: " << obj.name << std::endl;
+    out << "Type: " << obj.type << std::endl;
+    out << "Distance: " << obj.distance << " ly" << std::endl;
+    out << "Resource: " << obj.resource << std::endl;
+    out << "============================" << std::endl;
 
     return out;
 }
 
-std::istream& operator>>(std::istream& in, Discoverer& discoverer)
-{
-    int resourceChoice;
+std::istream& operator>>(std::istream& in, Discoverer& obj) {
+    int typeOption;
+    int resourceOption;
 
-    std::cout << "Choose planet type:" << std::endl;
-    std::cout << "1 - Small planet" << std::endl;
-    std::cout << "2 - Big planet" << std::endl;
-    std::cout << "3 - Star" << std::endl;
-    std::cout << "Enter choice: ";
-    in >> discoverer.planetType;
+    std::cout << "===== Add Destination =====" << std::endl;
 
-    while (discoverer.planetType < 1 || discoverer.planetType > 3)
-    {
-        std::cout << "Invalid planet type. Enter again: ";
-        in >> discoverer.planetType;
+    std::cout << "Name: ";
+    in >> obj.name;
+
+    std::cout << "Choose type:" << std::endl;
+    std::cout << "1. Small Planet" << std::endl;
+    std::cout << "2. Big Planet" << std::endl;
+    std::cout << "3. Star" << std::endl;
+    std::cout << "Option: ";
+    in >> typeOption;
+
+    while (typeOption < 1 || typeOption > 3) {
+        std::cout << "Invalid option. Choose 1, 2 or 3: ";
+        in >> typeOption;
     }
 
-    std::cout << "Enter distance from Earth in light years: ";
-    in >> discoverer.distanceFromEarth;
-
-    while (discoverer.distanceFromEarth < 0)
-    {
-        std::cout << "Invalid distance. Enter again: ";
-        in >> discoverer.distanceFromEarth;
+    if (typeOption == 1) {
+        obj.type = "SmallPlanet";
+    }
+    else if (typeOption == 2) {
+        obj.type = "BigPlanet";
+    }
+    else {
+        obj.type = "Star";
     }
 
-    std::cout << "Is it suitable for life? (1 - Yes, 0 - No): ";
-    in >> discoverer.suitableForLife;
+    std::cout << "Distance in light years: ";
+    in >> obj.distance;
 
-    std::cout << "Does it have life? (1 - Yes, 0 - No): ";
-    in >> discoverer.hasLife;
-
-    std::cout << "Choose rich resource:" << std::endl;
-    std::cout << "1 - Water" << std::endl;
-    std::cout << "2 - Iron" << std::endl;
-    std::cout << "3 - Gold" << std::endl;
-    std::cout << "4 - Uranium" << std::endl;
-    std::cout << "5 - Crystal" << std::endl;
-    std::cout << "6 - Unknown material" << std::endl;
-    std::cout << "Enter choice: ";
-    in >> resourceChoice;
-
-    while (resourceChoice < 1 || resourceChoice > 6)
-    {
-        std::cout << "Invalid resource. Enter again: ";
-        in >> resourceChoice;
+    while (obj.distance <= 0) {
+        std::cout << "Distance must be positive. Enter again: ";
+        in >> obj.distance;
     }
 
-    if (resourceChoice == 1)
-    {
-        discoverer.richResource = "Water";
-    }
-    else if (resourceChoice == 2)
-    {
-        discoverer.richResource = "Iron";
-    }
-    else if (resourceChoice == 3)
-    {
-        discoverer.richResource = "Gold";
-    }
-    else if (resourceChoice == 4)
-    {
-        discoverer.richResource = "Uranium";
-    }
-    else if (resourceChoice == 5)
-    {
-        discoverer.richResource = "Crystal";
-    }
-    else
-    {
-        discoverer.richResource = "Unknown material";
+    std::cout << "Choose resource:" << std::endl;
+    std::cout << "1. Hydrogen" << std::endl;
+    std::cout << "2. Iron" << std::endl;
+    std::cout << "3. Silicon" << std::endl;
+    std::cout << "4. Gold" << std::endl;
+    std::cout << "5. Uranium" << std::endl;
+    std::cout << "Option: ";
+    in >> resourceOption;
+
+    while (resourceOption < 1 || resourceOption > 5) {
+        std::cout << "Invalid option. Choose from 1 to 5: ";
+        in >> resourceOption;
     }
 
-    discoverer.missionSuccess = false;
-    discoverer.missionCompleted = false;
-
-    in.ignore();
+    if (resourceOption == 1) {
+        obj.resource = "Hydrogen";
+    }
+    else if (resourceOption == 2) {
+        obj.resource = "Iron";
+    }
+    else if (resourceOption == 3) {
+        obj.resource = "Silicon";
+    }
+    else if (resourceOption == 4) {
+        obj.resource = "Gold";
+    }
+    else {
+        obj.resource = "Uranium";
+    }
 
     return in;
 }
