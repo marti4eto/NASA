@@ -35,7 +35,7 @@ inline bool loginSystem()
     string username;
     string pass;
 
-    const string correctUsername = "NASA";
+    const string correctUsername = "SISI";
     const string correctPass = "1234";
 
     int attempts = 3;
@@ -48,12 +48,6 @@ inline bool loginSystem()
         cout << "========================================" << endl;
         cout << "          NASA NETWORK LOGIN            " << endl;
         cout << "========================================" << endl;
-        resetColor();
-
-        cout << endl;
-
-        color(15);
-        cout << "Enter your mission credentials." << endl;
         resetColor();
 
         cout << endl;
@@ -126,6 +120,161 @@ inline bool loginSystem()
 }
 
 inline void showIntro()
+{
+    vector<string> rocket =
+    {
+        "           /\\           ",
+        "          /  \\          ",
+        "         /____\\         ",
+        "        | NASA |        ",
+        "        |      |        ",
+        "        |  []  |        ",
+        "        |      |        ",
+        "        |______|        ",
+        "        /|    |\\        ",
+        "       /_|____|_\\       "
+    };
+
+    vector<vector<string>> flame =
+    {
+        {
+            "          /\\/\\          ",
+            "         / /\\ \\         ",
+            "        /_/  \\_\\        "
+        },
+        {
+            "          ||||          ",
+            "         ||||||         ",
+            "          \\/\\/          "
+        },
+        {
+            "          \\  /          ",
+            "         / /\\ \\         ",
+            "        /_/  \\_\\        "
+        }
+    };
+
+    vector<string> earth =
+    {
+        "          .-''''''-.",
+        "       .-'          '-.",
+        "      /   EARTH BASE   \\",
+        "      \\                /",
+        "       '-.          .-'",
+        "          '-......-'"
+    };
+
+    int screenHeight = 30;
+    int frame = 0;
+
+    clearScreen();
+
+    color(11);
+    cout << "\n\n";
+    cout << "========================================" << endl;
+    cout << "             NASA IT PROJECT            " << endl;
+    cout << "        Space Exploration Simulator     " << endl;
+    cout << "========================================" << endl << endl;
+
+    color(14);
+    printSlow("Initializing mission control systems...\n", 35);
+    sleepMs(500);
+    printSlow("Loading astronauts, rockets and planets...\n", 25);
+    sleepMs(500);
+    printSlow("Preparing launch sequence...\n", 15);
+    sleepMs(900);
+
+    color(14);
+    cout << "\n3..." << endl;
+    sleepMs(500);
+    cout << "2..." << endl;
+    sleepMs(500);
+    cout << "1..." << endl;
+    sleepMs(500);
+
+    color(12);
+    cout << "\nIGNITION!" << endl;
+    sleepMs(800);
+
+    for (int y = 14; y >= -13; y--)
+    {
+        clearScreen();
+
+        for (int row = 0; row < screenHeight; row++)
+        {
+            int rocketRow = row - y;
+
+            if (rocketRow >= 0 && rocketRow < static_cast<int>(rocket.size()))
+            {
+                color(15);
+                cout << rocket[rocketRow] << endl;
+            }
+            else if (rocketRow >= static_cast<int>(rocket.size()) &&
+                rocketRow < static_cast<int>(rocket.size()) + 3)
+            {
+                color(12 + frame % 3);
+                cout << flame[frame % 3][rocketRow - static_cast<int>(rocket.size())] << endl;
+            }
+            else if (row >= 23 && row < 23 + static_cast<int>(earth.size()) && y > 0)
+            {
+                color(9);
+                cout << earth[row - 23] << endl;
+            }
+            else
+            {
+                if (row % 6 == frame % 6)
+                {
+                    color(8);
+                    cout << "        .              *          .     " << endl;
+                }
+                else if (row % 7 == frame % 7)
+                {
+                    color(7);
+                    cout << "   *          .              .        * " << endl;
+                }
+                else
+                {
+                    cout << endl;
+                }
+            }
+        }
+
+        frame++;
+
+        if (y > 8)
+        {
+            sleepMs(180);
+        }
+        else if (y > 0)
+        {
+            sleepMs(120);
+        }
+        else
+        {
+            sleepMs(70);
+        }
+    }
+
+    clearScreen();
+
+    color(10);
+    cout << "\n\n";
+    cout << "========================================" << endl;
+    cout << "          LAUNCH SUCCESSFUL             " << endl;
+    cout << "========================================" << endl << endl;
+
+    color(11);
+    printSlow("Welcome to NASA Mission Control.\n", 40);
+    sleepMs(1000);
+
+    color(15);
+}
+
+
+#endif
+
+
+/*inline void showIntro()
 {
     vector<string> rocket =
     {
@@ -259,5 +408,4 @@ inline void showIntro()
 
     color(15);
 }
-
-#endif
+*/
