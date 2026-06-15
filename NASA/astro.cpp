@@ -1,33 +1,43 @@
 #include "Astro.hpp"
 
+void Astro::copy(const Astro& other) {
+    this->name = other.name;
+    this->age = other.age;
+    this->height = other.height;
+    this->weight = other.weight;
+}
+
 Astro::Astro() {
-    id = "";
     name = "";
-    gender = 'M';
     age = 0;
     height = 0;
     weight = 0;
 }
 
-Astro::Astro(string id, string name, char gender, int age, double height, double weight) {
-    this->id = id;
+Astro::Astro(std::string name, int age, double height, double weight) {
     this->name = name;
-    this->gender = gender;
     this->age = age;
     this->height = height;
     this->weight = weight;
 }
 
-string Astro::getId() const {
-    return id;
+Astro::Astro(const Astro& other) {
+    copy(other);
 }
 
-string Astro::getName() const {
+Astro::~Astro() {
+}
+
+Astro& Astro::operator=(const Astro& other) {
+    if (this != &other) {
+        copy(other);
+    }
+
+    return *this;
+}
+
+std::string Astro::getName() const {
     return name;
-}
-
-char Astro::getGender() const {
-    return gender;
 }
 
 int Astro::getAge() const {
@@ -43,11 +53,49 @@ double Astro::getWeight() const {
 }
 
 void Astro::print() const {
-    cout << "ID: " << id << endl;
-    cout << "Name: " << name << endl;
-    cout << "Gender: " << gender << endl;
-    cout << "Age: " << age << endl;
-    cout << "Height: " << height << " cm" << endl;
-    cout << "Weight: " << weight << " kg" << endl;
-    cout << "------------------------" << endl;
+    std::cout << *this;
+}
+
+bool Astro::operator==(const Astro& other) const {
+    return this->name == other.name;
+}
+
+bool Astro::operator!=(const Astro& other) const {
+    return !(*this == other);
+}
+
+std::ostream& operator<<(std::ostream& out, const Astro& obj) {
+    out << "========================================" << std::endl;
+    out << "             ASTRONAUT INFO             " << std::endl;
+    out << "========================================" << std::endl;
+    out << " Name   : " << obj.name << std::endl;
+    out << " Age    : " << obj.age << std::endl;
+    out << " Height : " << obj.height << " cm" << std::endl;
+    out << " Weight : " << obj.weight << " kg" << std::endl;
+    out << "========================================" << std::endl;
+
+    return out;
+}
+
+std::istream& operator>>(std::istream& in, Astro& obj) {
+    std::cout << "========================================" << std::endl;
+    std::cout << "              NEW ASTRONAUT             " << std::endl;
+    std::cout << "========================================" << std::endl;
+
+    std::cout << " Enter name        : ";
+    in >> obj.name;
+
+    std::cout << " Enter age         : ";
+    in >> obj.age;
+
+    std::cout << " Enter height (cm) : ";
+    in >> obj.height;
+
+    std::cout << " Enter weight (Kg) : ";
+    in >> obj.weight;
+
+    std::cout << "========================================" << std::endl;
+
+    return in;
+
 }

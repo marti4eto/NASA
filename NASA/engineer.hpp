@@ -6,7 +6,6 @@
 
 class Engineer {
 private:
-    std::string id;
     std::string name;
     int capacity;
     double maxDistance;
@@ -16,17 +15,15 @@ private:
 
 public:
     Engineer();
-    Engineer(std::string id, std::string name, int capacity, double maxDistance, double topSpeed);
+    Engineer(std::string name, int capacity, double maxDistance, double topSpeed);
     Engineer(const Engineer& other);
     ~Engineer();
     Engineer& operator=(const Engineer& other);
 
-    std::string getId() const;
     std::string getName() const;
     int getCapacity() const;
     double getMaxDistance() const;
     double getTopSpeed() const;
-    void setId(std::string id);
 
     bool operator==(const Engineer& other) const;
     bool operator!=(const Engineer& other) const;

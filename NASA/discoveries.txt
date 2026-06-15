@@ -1,5 +1,4 @@
-SP1
-Star
-SmallPlanet
-10
-Hydrogen
+MArs
+Small Planet
+5
+Iron

@@ -1,7 +1,6 @@
 #include "Discoverer.hpp"
 
 void Discoverer::copy(const Discoverer& other) {
-    id = other.id;
     name = other.name;
     type = other.type;
     distance = other.distance;
@@ -9,15 +8,13 @@ void Discoverer::copy(const Discoverer& other) {
 }
 
 Discoverer::Discoverer() {
-    id = "";
     name = "";
     type = "";
     distance = 0;
     resource = "";
 }
 
-Discoverer::Discoverer(std::string id, std::string name, std::string type, double distance, std::string resource) {
-    this->id = id;
+Discoverer::Discoverer(std::string name, std::string type, double distance, std::string resource) {
     this->name = name;
     this->type = type;
     this->distance = distance;
@@ -39,13 +36,6 @@ Discoverer& Discoverer::operator=(const Discoverer& other) {
     return *this;
 }
 
-std::string Discoverer::getId() const {
-    return id;
-}
-void Discoverer::setId(std::string id) {
-    this->id = id;
-}
-
 std::string Discoverer::getName() const {
     return name;
 }
@@ -63,7 +53,7 @@ std::string Discoverer::getResource() const {
 }
 
 bool Discoverer::operator==(const Discoverer& other) const {
-    return id == other.id;
+    return name == other.name;
 }
 
 bool Discoverer::operator!=(const Discoverer& other) const {
@@ -79,13 +69,14 @@ bool Discoverer::operator>(const Discoverer& other) const {
 }
 
 std::ostream& operator<<(std::ostream& out, const Discoverer& obj) {
-    out << "===== Destination Info =====" << std::endl;
-    out << "ID: " << obj.id << std::endl;
-    out << "Name: " << obj.name << std::endl;
-    out << "Type: " << obj.type << std::endl;
-    out << "Distance: " << obj.distance << " ly" << std::endl;
-    out << "Resource: " << obj.resource << std::endl;
-    out << "============================" << std::endl;
+    out << "========================================" << std::endl;
+    out << "            DESTINATION INFO            " << std::endl;
+    out << "========================================" << std::endl;
+    out << " Name     : " << obj.name << std::endl;
+    out << " Type     : " << obj.type << std::endl;
+    out << " Distance : " << obj.distance << " light years" << std::endl;
+    out << " Resource : " << obj.resource << std::endl;
+    out << "========================================" << std::endl;
 
     return out;
 }
@@ -94,52 +85,57 @@ std::istream& operator>>(std::istream& in, Discoverer& obj) {
     int typeOption;
     int resourceOption;
 
-    std::cout << "===== Add Destination =====" << std::endl;
+    std::cout << "========================================" << std::endl;
+    std::cout << "             ADD DESTINATION            " << std::endl;
+    std::cout << "========================================" << std::endl;
 
-    std::cout << "Name: ";
+    std::cout << " Name: ";
     in >> obj.name;
 
-    std::cout << "Choose type:" << std::endl;
-    std::cout << "1. Small Planet" << std::endl;
-    std::cout << "2. Big Planet" << std::endl;
-    std::cout << "3. Star" << std::endl;
-    std::cout << "Option: ";
+    std::cout << std::endl;
+    std::cout << " Choose type:" << std::endl;
+    std::cout << " 1. Small Planet" << std::endl;
+    std::cout << " 2. Big Planet" << std::endl;
+    std::cout << " 3. Star" << std::endl;
+    std::cout << " Option: ";
     in >> typeOption;
 
     while (typeOption < 1 || typeOption > 3) {
-        std::cout << "Invalid option. Choose 1, 2 or 3: ";
+        std::cout << " Invalid option. Choose 1, 2 or 3: ";
         in >> typeOption;
     }
 
     if (typeOption == 1) {
-        obj.type = "SmallPlanet";
+        obj.type = "Small Planet";
     }
     else if (typeOption == 2) {
-        obj.type = "BigPlanet";
+        obj.type = "Big Planet";
     }
     else {
         obj.type = "Star";
     }
 
-    std::cout << "Distance in light years: ";
+    std::cout << std::endl;
+    std::cout << " Distance in light years: ";
     in >> obj.distance;
 
     while (obj.distance <= 0) {
-        std::cout << "Distance must be positive. Enter again: ";
+        std::cout << " Distance must be positive. Enter again: ";
         in >> obj.distance;
     }
 
-    std::cout << "Choose resource:" << std::endl;
-    std::cout << "1. Hydrogen" << std::endl;
-    std::cout << "2. Iron" << std::endl;
-    std::cout << "3. Silicon" << std::endl;
-    std::cout << "4. Gold" << std::endl;
-    std::cout << "5. Uranium" << std::endl;
-    std::cout << "Option: ";
+    std::cout << std::endl;
+    std::cout << " Choose resource:" << std::endl;
+    std::cout << " 1. Hydrogen" << std::endl;
+    std::cout << " 2. Iron" << std::endl;
+    std::cout << " 3. Silicon" << std::endl;
+    std::cout << " 4. Gold" << std::endl;
+    std::cout << " 5. Uranium" << std::endl;
+    std::cout << " Option: ";
     in >> resourceOption;
 
     while (resourceOption < 1 || resourceOption > 5) {
-        std::cout << "Invalid option. Choose from 1 to 5: ";
+        std::cout << " Invalid option. Choose from 1 to 5: ";
         in >> resourceOption;
     }
 
@@ -158,6 +154,8 @@ std::istream& operator>>(std::istream& in, Discoverer& obj) {
     else {
         obj.resource = "Uranium";
     }
+
+    std::cout << "========================================" << std::endl;
 
     return in;
 }

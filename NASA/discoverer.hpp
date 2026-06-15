@@ -6,7 +6,6 @@
 
 class Discoverer {
 private:
-    std::string id;
     std::string name;
     std::string type;
     double distance;
@@ -16,17 +15,15 @@ private:
 
 public:
     Discoverer();
-    Discoverer(std::string id, std::string name, std::string type, double distance, std::string resource);
+    Discoverer(std::string name, std::string type, double distance, std::string resource);
     Discoverer(const Discoverer& other);
     ~Discoverer();
     Discoverer& operator=(const Discoverer& other);
 
-    std::string getId() const;
     std::string getName() const;
     std::string getType() const;
     double getDistance() const;
     std::string getResource() const;
-    void setId(std::string id);
 
     bool operator==(const Discoverer& other) const;
     bool operator!=(const Discoverer& other) const;
