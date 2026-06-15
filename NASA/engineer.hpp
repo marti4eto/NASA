@@ -29,6 +29,8 @@ public:
     bool operator!=(const Engineer& other) const;
     bool operator<(const Engineer& other) const;
     bool operator>(const Engineer& other) const;
+    bool operator<=(const Engineer& other) const;
+    bool operator>=(const Engineer& other) const;
 
     friend std::ostream& operator<<(std::ostream& out, const Engineer& obj);
     friend std::istream& operator>>(std::istream& in, Engineer& obj);

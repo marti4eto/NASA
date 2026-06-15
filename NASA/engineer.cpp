@@ -61,11 +61,19 @@ bool Engineer::operator!=(const Engineer& other) const {
 }
 
 bool Engineer::operator<(const Engineer& other) const {
-    return maxDistance < other.maxDistance;
+    return capacity < other.capacity;
 }
 
 bool Engineer::operator>(const Engineer& other) const {
-    return maxDistance > other.maxDistance;
+    return capacity > other.capacity;
+}
+
+bool Engineer::operator<=(const Engineer& other) const {
+    return capacity <= other.capacity;
+}
+
+bool Engineer::operator>=(const Engineer& other) const {
+    return capacity >= other.capacity;
 }
 
 std::ostream& operator<<(std::ostream& out, const Engineer& obj) {
@@ -86,7 +94,7 @@ std::istream& operator>>(std::istream& in, Engineer& obj) {
     std::cout << "              CREATE ROCKET             " << std::endl;
     std::cout << "========================================" << std::endl;
 
-    std::cout << " Rocket name (max 15 characters) : ";
+    std::cout << " Rocket name (Max 15 characters) : ";
     in >> obj.name;
 
     while (obj.name.size() > 15) {

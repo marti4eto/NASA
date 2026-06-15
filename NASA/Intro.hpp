@@ -45,9 +45,9 @@ inline bool loginSystem()
         clearScreen();
 
         color(11);
-        cout << "========================================" << endl;
-        cout << "          NASA NETWORK LOGIN            " << endl;
-        cout << "========================================" << endl;
+        printSlow("========================================\n", 15);
+        printSlow("          NASA NETWORK LOGIN            \n", 20);
+        printSlow("========================================\n", 15);
         resetColor();
 
         cout << endl;
@@ -67,9 +67,9 @@ inline bool loginSystem()
             clearScreen();
 
             color(10);
-            cout << "========================================" << endl;
-            cout << "             ACCESS GRANTED             " << endl;
-            cout << "========================================" << endl;
+            printSlow("========================================\n", 15);
+            printSlow("            ACCESS GRANTED            \n", 20);
+            printSlow("========================================\n", 15);
             resetColor();
 
             cout << endl;
@@ -264,8 +264,8 @@ inline void showIntro()
     cout << "========================================" << endl << endl;
 
     color(11);
-    printSlow("Welcome to NASA Mission Control.\n", 40);
-    sleepMs(1000);
+    printSlow("Welcome SISI to NASA Mission Control.\n", 40);
+    sleepMs(2000);
 
     color(15);
 }

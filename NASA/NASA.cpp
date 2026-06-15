@@ -15,8 +15,8 @@ std::vector<Discoverer> destinations;
 int astronautCount = 0;
 int rocketCount = 0;
 int destinationCount = 0;
-
-void saveAstronautsToFile() {
+//zapisvam neshata v failove, za da ne gi gubim pri zatvarqne na programata
+void saveAstronautsToFile() { 
     std::ofstream ofs("astronauts.txt");
 
     for (const auto& a : astronauts) {
@@ -219,6 +219,58 @@ void removeRocket() {
 
     std::cout << "Rocket not found." << std::endl;
 }
+void compareRockets() {
+    if (rockets.size() < 2) {
+        std::cout << "You need at least two rockets to compare." << std::endl;
+        return;
+    }
+
+    std::cout << "========================================" << std::endl;
+    std::cout << "        COMPARE ROCKET CAPACITY         " << std::endl;
+    std::cout << "========================================" << std::endl;
+
+	//pokazvame raketite s nomerca 
+
+    for (size_t i = 0; i < rockets.size(); i++) {
+        std::cout << i + 1 << ". " << rockets[i].getName()
+            << " (Capacity: " << rockets[i].getCapacity() << ")"
+            << std::endl;
+    }
+
+    int first;
+    int second;
+
+    std::cout << std::endl;
+    std::cout << "Choose first rocket number: ";
+    std::cin >> first;
+
+    std::cout << "Choose second rocket number: ";
+    std::cin >> second;
+
+    if (first < 1 || first > rockets.size() || second < 1 || second > rockets.size()) {
+        std::cout << "Invalid rocket number." << std::endl;
+        return;
+    }
+	//vzimame raketite ot vektora po indeksite im
+
+    Engineer rocket1 = rockets[first - 1];
+    Engineer rocket2 = rockets[second - 1];
+
+    std::cout << std::endl;
+    
+    //predefiniraniq operator 
+    if (rocket1 > rocket2) {
+        std::cout << rocket1.getName() << " has bigger capacity." << std::endl;
+    }
+    else if (rocket1 < rocket2) {
+        std::cout << rocket2.getName() << " has bigger capacity." << std::endl;
+    }
+    else {
+        std::cout << "Both rockets have equal capacity." << std::endl;
+    }
+
+    std::cout << "========================================" << std::endl;
+}
 
 void engineerMenu() {
     int option;
@@ -232,6 +284,7 @@ void engineerMenu() {
         std::cout << " 1. Add rocket" << std::endl;
         std::cout << " 2. Remove rocket" << std::endl;
         std::cout << " 3. List rockets" << std::endl;
+        std::cout << " 4. Compare rockets by capacity" << std::endl;
         std::cout << " 0. Back" << std::endl;
         std::cout << "========================================" << std::endl;
         std::cout << " Choose option: ";
@@ -248,6 +301,9 @@ void engineerMenu() {
             break;
         case 3:
             listRockets();
+            break;
+        case 4:
+            compareRockets();
             break;
         case 0:
             break;
@@ -355,18 +411,19 @@ void discovererMenu() {
 }
 
 void launchMissionMenu() {
+	//proverqva dali ima astonavti, raketi i destinacii, zashtoto bez tqh ne moje da se startira misiqta
     if (astronauts.empty()) {
-        std::cout << "Mission error: no astronauts available." << std::endl;
+        std::cout << "Mission error: No astronauts are available." << std::endl;
         return;
     }
 
     if (rockets.empty()) {
-        std::cout << "Mission error: no rockets available." << std::endl;
+        std::cout << "Mission error: No rockets  are available." << std::endl;
         return;
     }
 
     if (destinations.empty()) {
-        std::cout << "Mission error: no destinations available." << std::endl;
+        std::cout << "Mission error: No destinations are available." << std::endl;
         return;
     }
 
@@ -375,7 +432,7 @@ void launchMissionMenu() {
     std::cout << "========================================" << std::endl;
 
     std::cout << "Available astronauts:" << std::endl;
-    for (const auto& a : astronauts) {
+	for (const auto& a : astronauts) { // a - vremmena promenliwa koqto shte se izpolzva v cikula
         std::cout << "- " << a.getName() << std::endl;
     }
 
@@ -394,7 +451,7 @@ void launchMissionMenu() {
         return;
     }
 
-    std::vector<Astro> selected;
+	std::vector<Astro> selected; //pazi samo izbranite astonavti za misiqta
 
     for (int i = 0; i < numToSend; ) {
         std::string astronautName;
@@ -404,7 +461,7 @@ void launchMissionMenu() {
 
         bool found = false;
 
-        for (const auto& a : astronauts) {
+		for (const auto& a : astronauts) { // Този цикъл минава през всички астронавти в главния списък astronauts. minavame prez vseki astonavt v glavniq spisuk
             if (a.getName() == astronautName) {
                 bool alreadySelected = false;
 
@@ -415,13 +472,13 @@ void launchMissionMenu() {
                     }
                 }
 
-                if (alreadySelected) {
+                if (alreadySelected) { //proverka za poztarqne
                     std::cout << "Astronaut already selected." << std::endl;
                     found = true;
                     break;
                 }
 
-                selected.push_back(a);
+				selected.push_back(a); //dobavqme go v spisuka s izbranite astonavti
                 found = true;
                 i++;
                 break;
@@ -452,7 +509,7 @@ void launchMissionMenu() {
 
     for (size_t i = 0; i < rockets.size(); i++) {
         if (rockets[i].getName() == rocketName) {
-            rocketIndex = static_cast<int>(i);
+			rocketIndex = static_cast<int>(i); //ako nameri raketa , zapazva indeksut mu v vektora
             break;
         }
     }
@@ -477,7 +534,7 @@ void launchMissionMenu() {
     std::cout << "Choose destination name: ";
     std::cin >> destinationName;
 
-    int destinationIndex = -1;
+    int destinationIndex = -1; //pak proverka ako ne nameri nisho 
 
     for (size_t i = 0; i < destinations.size(); i++) {
         if (destinations[i].getName() == destinationName) {
